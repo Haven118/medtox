@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, Link, useNavigate, Navigate } from 'react-router-dom'
-import { LayoutDashboard, Search, FileText, LogOut } from 'lucide-react'
+import { LayoutDashboard, Search, FileText, LogOut, FolderOpen } from 'lucide-react'
 import { useAuth } from './context/AuthContext'
 import ToxSearch from './components/ToxSearch'
 import ReportWizard from './components/ReportWizard'
+import ReportsList from './components/ReportsList'
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import './App.css'
@@ -52,6 +53,10 @@ function App() {
           <Search size={20} />
           {isNavOpen && <span>Tox Search</span>}
         </Link>
+        <Link to="/reports" style={{color: 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '20px', padding: '12px 25px'}}>
+          <FolderOpen size={20} />
+          {isNavOpen && <span>Reports</span>}
+        </Link>
         <Link to="/report" style={{color: 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '20px', padding: '12px 25px'}}>
           <FileText size={20} />
           {isNavOpen && <span>New Report</span>}
@@ -78,6 +83,11 @@ function App() {
           <Route path="/search" element={
             <ProtectedRoute>
               <ToxSearch />
+            </ProtectedRoute>
+          } />
+          <Route path="/reports" element={
+            <ProtectedRoute>
+              <ReportsList />
             </ProtectedRoute>
           } />
           <Route path="/report" element={

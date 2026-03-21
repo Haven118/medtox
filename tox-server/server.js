@@ -2,10 +2,20 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3002;
+
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.error('MongoDB error:', err));
+}
+
+const ReportSchema = new mongoose.Schema({}, { strict: false, timestamps: true });
+const Report = mongoose.models.Report || mongoose.model('Report', ReportSchema);
 
 app.use(cors({
   origin: ['http://localhost:3001', 'https://haven118.github.io']
@@ -56,6 +66,37 @@ app.post('/api/auth/register', (req, res) => {
   }
   registeredUsers[username] = { username, email, password, role: 'EMS' };
   res.json({ success: true, message: 'EMS created. Login now.' });
+});
+
+// Reports — MongoDB if available, else in-memory fallback
+let memReports = [];
+const useDB = () => mongoose.connection.readyState === 1;
+
+app.get('/api/reports', async (req, res) => {
+  if (useDB()) {
+    const docs = await Report.find().sort({ createdAt: -1 }).lean();
+    return res.json(docs.map(d => ({ ...d, id: d._id })));
+  }
+  res.json(memReports);
+});
+
+app.post('/api/reports', async (req, res) => {
+  if (useDB()) {
+    const doc = await Report.create(req.body);
+    return res.json({ success: true, report: { ...doc.toObject(), id: doc._id } });
+  }
+  const report = { id: Date.now(), ...req.body };
+  memReports.unshift(report);
+  res.json({ success: true, report });
+});
+
+app.delete('/api/reports/:id', async (req, res) => {
+  if (useDB()) {
+    await Report.findByIdAndDelete(req.params.id).catch(() => {});
+    return res.json({ success: true });
+  }
+  memReports = memReports.filter(r => r.id !== Number(req.params.id));
+  res.json({ success: true });
 });
 
 // Tox search
