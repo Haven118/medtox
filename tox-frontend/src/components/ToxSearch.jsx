@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Search, Loader } from 'lucide-react';
+import API_URL from '../config';
 
 const ToxSearch = () => {
   const [query, setQuery] = useState('');
@@ -9,7 +10,7 @@ const ToxSearch = () => {
   const handleSearch = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:3002/api/tox/search?q=${encodeURIComponent(query)}`);
+      const res = await fetch(`${API_URL}/api/tox/search?q=${encodeURIComponent(query)}`);
       const data = await res.json();
       setResults(data.results || []);
     } catch (err) {
