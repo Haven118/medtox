@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3002;
 
 app.use(cors({
-  origin: 'http://localhost:3001'
+  origin: ['http://localhost:3001', 'https://haven118.github.io']
 }));
 app.use(express.json());
 
