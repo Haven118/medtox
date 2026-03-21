@@ -1,0 +1,105 @@
+/* Full medrep-style glassmorphism */
+a, button, input, select, textarea {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app {
+  background: radial-gradient(ellipse at bottom, #1a0033 0%, #0a0a1e 70%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.app::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120,119,198,0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120,219,255,0.2) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app-nav {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.app-nav a,
+.app-nav button {
+  position: relative;
+  overflow: hidden;
+}
+
+.app-nav a::before,
+.app-nav button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.6s;
+}
+
+.app-nav a:hover::before,
+.app-nav button:hover::before {
+  left: 100%;
+}
+
+.glass-panel {
+  box-shadow: 
+    0 25px 45px -12px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-panel input,
+.glass-panel textarea,
+.glass-panel select {
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.glass-panel input:focus,
+.glass-panel textarea:focus,
+.glass-panel select:focus {
+  box-shadow: 
+    0 0 0 3px rgba(0, 242, 255, 0.3),
+    0 10px 25px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+button {
+  position: relative;
+  overflow: hidden;
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+button:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+

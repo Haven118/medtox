@@ -1,0 +1,14 @@
+{
+  "general_tox": ["tox", "toxicology", "tox screen", "drug screen", "uds", "urine drug", "serum tox", "blood tox", "overdose", "poisoning", "ingestion"],
+  "standard_uds": ["marijuana", "thc", "cannabis", "cocaine", "benzoylecgonine", "opiate", "heroin", "morphine", "codeine", "amphetamine", "methamphetamine", "meth", "mdma", "ecstasy", "pcp", "phencyclidine"],
+  "expanded_panel": ["oxycodone", "oxymorphone", "hydrocodone", "fentanyl", "tramadol", "buprenorphine", "suboxone", "methadone", "barbiturate", "phenobarbital", "benzodiazepine", "diazepam", "lorazepam", "alprazolam", "clonazepam"],
+  "poison_panel": ["overdose", "od", "poisoning", "ingestion", "unknown substance", "suicide attempt", "intentional ingestion", "paracetamol", "acetaminophen", "tylenol", "salicylate", "aspirin", "co", "carbon monoxide", "cyanide", "organophosphate", "pesticide"],
+  "alcohol_panel": ["alcohol", "ethanol", "etoh", "intoxicated", "drunk", "dui"],
+  "sedative_panel": ["sedative", "hypnotic", "sleeping pills", "overdose sedatives", "benzo", "benzodiazepine", "gaba drugs"],
+  "stimulant_panel": ["stimulant", "upper", "cocaine", "meth", "amphetamine", "adderall", "ritalin", "speed"],
+  "cannabis_panel": ["weed", "cannabis", "thc", "marijuana", "hash", "edible"],
+  "prescription_panel": ["prescription abuse", "medication overdose", "polypharmacy", "drug interaction", "therapeutic level", "toxicity level"],
+  "dui_panel": ["dui", "driving under influence", "impaired driving", "roadside test", "legal tox"],
+  "heavy_metals_panel": ["lead", "mercury", "arsenic", "heavy metal", "poisoning metal", "industrial exposure"],
+  "hallucinogen_panel": ["lsd", "acid", "psilocybin", "mushrooms", "hallucination", "ketamine", "dissociative"]
+}
