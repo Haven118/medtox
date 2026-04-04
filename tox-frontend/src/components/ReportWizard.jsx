@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Zap } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
+import API_URL from '../config';
 
 const S = {
   input: { width: '100%', padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.06)', border: '1px solid var(--glass-border)', borderRadius: '12px', color: 'white', fontSize: '0.95rem' },
@@ -71,9 +72,15 @@ const ReportWizard = () => {
     if (!formData.keywords) return;
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:3002/api/tox/panel?keywords=${encodeURIComponent(formData.keywords)}`);
-      if (res.ok) setResults(await res.json());
-      else setResults({ analytes: [], panels: [], summary: 'API error' });
+      const res = await fetch(`${API_URL}/api/tox/panel?keywords=${encodeURIComponent(formData.keywords)}`);
+      if (res.ok) {
+        const data = await res.json();
+        setResults(data);
+        if (data.analytes?.length > 0) {
+          const narr = generateNarrative({ ...formData }, data.analytes);
+          saveReport(data.analytes, narr);
+        }
+      } else setResults({ analytes: [], panels: [], summary: 'API error' });
     } catch { setResults({ analytes: [], panels: [], summary: 'Network error' }); }
     setLoading(false);
   };
@@ -81,6 +88,21 @@ const ReportWizard = () => {
   const handleInput = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const saveReport = (analytes, narrative) => {
+    const report = {
+      emsCaseNumber,
+      date: new Date().toLocaleString(),
+      analytes,
+      narrative,
+      ...formData,
+    };
+    fetch(`${API_URL}/api/reports`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(report),
+    }).catch(() => {});
   };
 
   const generatePDF = () => {

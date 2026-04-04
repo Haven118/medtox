@@ -2,33 +2,43 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3002;
 
-app.use(cors({
-  origin: 'http://localhost:3001'
-}));
+app.use(cors({ origin: ['http://localhost:3001', 'https://haven118.github.io'] }));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.json({ message: 'MedTox API Ready' });
-});
+// Start server immediately so Render doesn't time out
+app.listen(PORT, () => console.log(`MedTox API on port ${PORT}`));
 
-// Users
+// Connect to MongoDB in background
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.error('MongoDB error:', err));
+}
+
+const ReportSchema = new mongoose.Schema({}, { strict: false, timestamps: true });
+const Report = mongoose.models.Report || mongoose.model('Report', ReportSchema);
+
+const useDB = () => mongoose.connection.readyState === 1;
+let memReports = [];
+
+// Auth
 let registeredUsers = {
   'ems_lab': { username: 'ems_lab', email: 'lab@ems.com', hashedPassword: 'PASS123', role: 'EMS' }
 };
 
-// Auth
+app.get('/', (req, res) => res.json({ message: 'MedTox API Ready' }));
+
 app.post('/api/auth/login', (req, res) => {
   const { username, password } = req.body;
   const user = registeredUsers[username];
   if (user && user.hashedPassword === password) {
-    if (user.role !== 'EMS') {
-      return res.status(403).json({ success: false, message: 'PD access not permitted. EMS only.' });
-    }
+    if (user.role !== 'EMS') return res.status(403).json({ success: false, message: 'PD access not permitted. EMS only.' });
     const token = Buffer.from(`${username}:${Date.now()}`).toString('base64');
     res.json({ success: true, user: { username: user.username, role: user.role }, token });
   } else {
@@ -44,61 +54,66 @@ app.get('/api/auth/me', (req, res) => {
     const user = registeredUsers[username];
     if (user) res.json({ success: true, user: { username: user.username, role: user.role } });
     else res.status(401).json({ success: false });
-  } catch {
-    res.status(401).json({ success: false });
-  }
+  } catch { res.status(401).json({ success: false }); }
 });
 
 app.post('/api/auth/register', (req, res) => {
   const { username, email, password, role } = req.body;
-  if (role !== 'EMS' || registeredUsers[username]) {
-    return res.status(400).json({ success: false, message: 'EMS only, username taken' });
-  }
+  if (role !== 'EMS' || registeredUsers[username]) return res.status(400).json({ success: false, message: 'EMS only, username taken' });
   registeredUsers[username] = { username, email, password, role: 'EMS' };
   res.json({ success: true, message: 'EMS created. Login now.' });
+});
+
+// Reports
+app.get('/api/reports', async (req, res) => {
+  if (useDB()) {
+    const docs = await Report.find().sort({ createdAt: -1 }).lean();
+    return res.json(docs.map(d => ({ ...d, id: d._id })));
+  }
+  res.json(memReports);
+});
+
+app.post('/api/reports', async (req, res) => {
+  if (useDB()) {
+    const doc = await Report.create(req.body);
+    return res.json({ success: true, report: { ...doc.toObject(), id: doc._id } });
+  }
+  const report = { id: Date.now(), ...req.body };
+  memReports.unshift(report);
+  res.json({ success: true, report });
+});
+
+app.delete('/api/reports/:id', async (req, res) => {
+  if (useDB()) {
+    await Report.findByIdAndDelete(req.params.id).catch(() => {});
+    return res.json({ success: true });
+  }
+  memReports = memReports.filter(r => r.id !== Number(req.params.id));
+  res.json({ success: true });
 });
 
 // Tox search
 const { searchDrugs } = require('./data.js');
 app.get('/api/tox/search', (req, res) => {
-  const q = req.query.q || '';
-  res.json({ results: searchDrugs(q) });
+  res.json({ results: searchDrugs(req.query.q || '') });
 });
 
-// PANEL DETECTION - KEYWORD DRIVEN
-const panelsFile = path.join(__dirname, '../data/panels.json');
-const panels = JSON.parse(fs.readFileSync(panelsFile, 'utf8'));
-const keywordsFile = path.join(__dirname, '../data/panel_keywords.json');
-const panelKeywords = JSON.parse(fs.readFileSync(keywordsFile, 'utf8'));
+// Panel detection
+const panels = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/panels.json'), 'utf8'));
+const panelKeywords = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/panel_keywords.json'), 'utf8'));
 
 app.get('/api/tox/panel', (req, res) => {
-  const { keywords = '' } = req.query;
-  const lowerKeywords = keywords.toLowerCase();
+  const lowerKeywords = (req.query.keywords || '').toLowerCase();
   const triggeredPanels = [];
-
-  // Match keywords to panels
   for (const [panelName, triggers] of Object.entries(panelKeywords)) {
-    for (const trigger of triggers) {
-      if (lowerKeywords.includes(trigger.toLowerCase())) {
-        triggeredPanels.push(panelName);
-        break;
-      }
-    }
+    if (triggers.some(t => lowerKeywords.includes(t.toLowerCase()))) triggeredPanels.push(panelName);
   }
-
-  // Fallback
   if (triggeredPanels.length === 0) triggeredPanels.push('standard_panel');
-
-  // Primary panel (first match)
   const primaryPanel = triggeredPanels[0];
-  const analytes = panels[primaryPanel] || panels.standard_panel || [];
-
+  console.log(`ToxPanel - keywords:"${req.query.keywords || ''}", lower:"${lowerKeywords}", triggered:[${triggeredPanels.join(', ')}], primary:"${primaryPanel}"`);
   res.json({
     panels: [...new Set(triggeredPanels)].map(p => p.replace(/_panel$/, '')),
-    analytes,
-    summary: `Auto-selected ${primaryPanel.replace(/_panel$/, '')} (${triggeredPanels.length} panels). Keywords: ${keywords}`
+    analytes: panels[primaryPanel] || panels.standard_panel || [],
+    summary: `Auto-selected ${primaryPanel.replace(/_panel$/, '')} (${triggeredPanels.length} panels).`
   });
 });
-
-app.listen(PORT, () => console.log(`MedTox API v2.0 on port ${PORT} - Ready!`));
-
