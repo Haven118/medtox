@@ -6,7 +6,7 @@
   "alcohol_panel": ["alcohol", "ethanol", "etoh", "intoxicated", "drunk", "dui"],
   "sedative_panel": ["sedative", "hypnotic", "sleeping pills", "overdose sedatives", "benzo", "benzodiazepine", "gaba drugs"],
   "stimulant_panel": ["stimulant", "upper", "cocaine", "meth", "amphetamine", "adderall", "ritalin", "speed"],
-  "cannabis_panel": ["weed", "cannabis", "thc", "marijuana", "hash", "edible"],
+"cannabinoid_panel":["weed","cannabis","thc","marijuana","hash","edible"],
   "prescription_panel": ["prescription abuse", "medication overdose", "polypharmacy", "drug interaction", "therapeutic level", "toxicity level"],
   "dui_panel": ["dui", "driving under influence", "impaired driving", "roadside test", "legal tox"],
   "heavy_metals_panel": ["lead", "mercury", "arsenic", "heavy metal", "poisoning metal", "industrial exposure"],

@@ -110,6 +110,7 @@ app.get('/api/tox/panel', (req, res) => {
   }
   if (triggeredPanels.length === 0) triggeredPanels.push('standard_panel');
   const primaryPanel = triggeredPanels[0];
+  console.log(`ToxPanel - keywords:"${req.query.keywords || ''}", lower:"${lowerKeywords}", triggered:[${triggeredPanels.join(', ')}], primary:"${primaryPanel}"`);
   res.json({
     panels: [...new Set(triggeredPanels)].map(p => p.replace(/_panel$/, '')),
     analytes: panels[primaryPanel] || panels.standard_panel || [],
