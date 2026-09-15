@@ -124,27 +124,19 @@ const resolveAnalytes = (panelNames) => {
 
   for (let p = 0; p < panelNames.length; p++) {
     const panel = panels[panelNames[p]] || [];
-    const isPrimary = p === 0;
     for (const a of panel) {
       if (seen.has(a.analyte)) continue;
       seen.add(a.analyte);
       const [min, max] = a.range;
       const decimals = max < 5 ? 2 : max < 50 ? 1 : 0;
-      let observed;
-      if (isPrimary) {
-        // Primary panel: realistic positive — between 1.2x and 3x the cutoff, capped at max
-        const posMin = Math.min(a.positiveThreshold * 1.2, max * 0.6);
-        const posMax = Math.min(a.positiveThreshold * 3, max);
-        observed = randomInRange(posMin, posMax, decimals);
-      } else {
-        // Secondary panels: random across full realistic range
-        observed = randomInRange(min, max, decimals);
-      }
-      const isPositive = observed >= a.positiveThreshold;
+      // All keyword-triggered panels always positive with realistic amounts (1.2x-3x cutoff)
+      const posMin = Math.min(a.positiveThreshold * 1.2, max * 0.6);
+      const posMax = Math.min(a.positiveThreshold * 3, max);
+      const observed = randomInRange(posMin, posMax, decimals);
       analytes.push({
         analyte: a.analyte,
-        screening: isPositive ? 'POSITIVE' : 'NEGATIVE',
-        confirmatory: isPositive ? 'POSITIVE' : 'N/A',
+        screening: 'POSITIVE',
+        confirmatory: 'POSITIVE',
         cutoff: a.cutoff,
         observed: `${observed} ${a.unit}`
       });
