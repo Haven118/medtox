@@ -69,7 +69,7 @@ const ReportWizard = () => {
   const [emsCaseNumber] = useState(`EMS-TOX-${Date.now() % 10000}`);
 
   const analyze = async () => {
-    if (!formData.keywords) return;
+    if (formData.selectedPanels.length === 0) return;
     setLoading(true);
     try {
       const res = await fetch(`${API_URL}/api/tox/panel?panels=${encodeURIComponent(formData.selectedPanels.join(','))}`);
