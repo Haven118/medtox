@@ -72,7 +72,7 @@ const ReportWizard = () => {
     if (!formData.keywords) return;
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/tox/panel?panels=${encodeURIComponent(formData.selectedPanels.join(','))}&specimen=${encodeURIComponent(formData.specimenType)}`);
+      const res = await fetch(`${API_URL}/api/tox/panel?panels=${encodeURIComponent(formData.selectedPanels.join(','))}`);
       if (res.ok) {
         const data = await res.json();
         setResults(data);

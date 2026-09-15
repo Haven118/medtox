@@ -164,15 +164,9 @@ const resolveAnalytes = (panelNames) => {
 };
 
 app.get('/api/tox/panel', (req, res) => {
-  const specimenType = (req.query.specimen || '').toLowerCase();
   const triggeredPanels = [];
 
-  // Add base panel from specimen type
-  if (specimenType.includes('urine')) triggeredPanels.push('urine_panel');
-  else if (specimenType.includes('blood')) triggeredPanels.push('blood_panel');
-  else if (specimenType.includes('hair')) triggeredPanels.push('hair_panel');
-
-  // Add directly selected panels from frontend
+  // Use directly selected panels from frontend
   const selectedPanels = (req.query.panels || '').split(',').map(p => p.trim()).filter(Boolean);
   for (const p of selectedPanels) {
     if (!triggeredPanels.includes(p)) triggeredPanels.push(p);
