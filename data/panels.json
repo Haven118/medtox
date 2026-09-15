@@ -16,11 +16,9 @@
   ],
   "stimulant_panel": [
     {"analyte":"Cocaine","cutoff":"150 ng/mL","range":[50,1200],"unit":"ng/mL","positiveThreshold":150},
-    {"analyte":"Benzoylecgonine","cutoff":"300 ng/mL","range":[100,2000],"unit":"ng/mL","positiveThreshold":300},
     {"analyte":"Methamphetamine","cutoff":"500 ng/mL","range":[50,5000],"unit":"ng/mL","positiveThreshold":500},
     {"analyte":"Amphetamine","cutoff":"500 ng/mL","range":[50,4000],"unit":"ng/mL","positiveThreshold":500},
-    {"analyte":"MDMA","cutoff":"500 ng/mL","range":[50,3000],"unit":"ng/mL","positiveThreshold":500},
-    {"analyte":"MDA","cutoff":"500 ng/mL","range":[100,2000],"unit":"ng/mL","positiveThreshold":500}
+    {"analyte":"MDMA","cutoff":"500 ng/mL","range":[50,3000],"unit":"ng/mL","positiveThreshold":500}
   ],
   "cannabinoid_panel": [
     {"analyte":"THC-COOH","cutoff":"50 ng/mL","range":[15,500],"unit":"ng/mL","positiveThreshold":50},
@@ -59,7 +57,7 @@
   ],
   "dui_panel": [
     {"analyte":"Ethanol","cutoff":"0.08%","range":[0.02,0.30],"unit":"%","positiveThreshold":0.08},
-    {"analyte":"Amphetamine","cutoff":"250 ng/mL","range":[50,1500],"unit":"ng/mL","positiveThreshold":250},
+    {"analyte":"Amphetamine","cutoff":"500 ng/mL","range":[50,1500],"unit":"ng/mL","positiveThreshold":500},
     {"analyte":"Benzodiazepines","cutoff":"50 ng/mL","range":[10,300],"unit":"ng/mL","positiveThreshold":50},
     {"analyte":"Cocaine","cutoff":"150 ng/mL","range":[50,800],"unit":"ng/mL","positiveThreshold":150}
   ],
