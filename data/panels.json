@@ -19,7 +19,6 @@
     {"analyte":"Xylazine","cutoff":"10 ng/mL","range":[2,80],"unit":"ng/mL","positiveThreshold":10}
   ],
   "urine_panel": [
-    {"analyte":"Marijuana (THC)","cutoff":"50 ng/mL","range":[15,400],"unit":"ng/mL","positiveThreshold":50},
     {"analyte":"Cocaine","cutoff":"150 ng/mL","range":[50,1500],"unit":"ng/mL","positiveThreshold":150},
     {"analyte":"Amphetamines","cutoff":"500 ng/mL","range":[50,3000],"unit":"ng/mL","positiveThreshold":500},
     {"analyte":"Opiates","cutoff":"300 ng/mL","range":[20,1200],"unit":"ng/mL","positiveThreshold":300},
@@ -122,7 +121,6 @@
     {"analyte":"Amphetamines","cutoff":"500 ng/mL","range":[50,3000],"unit":"ng/mL","positiveThreshold":500},
     {"analyte":"Cocaine","cutoff":"150 ng/mL","range":[50,1200],"unit":"ng/mL","positiveThreshold":150},
     {"analyte":"Opiates","cutoff":"300 ng/mL","range":[20,1000],"unit":"ng/mL","positiveThreshold":300},
-    {"analyte":"Marijuana (THC)","cutoff":"50 ng/mL","range":[15,400],"unit":"ng/mL","positiveThreshold":50},
     {"analyte":"PCP","cutoff":"25 ng/mL","range":[5,100],"unit":"ng/mL","positiveThreshold":25},
     {"analyte":"Benzodiazepines","cutoff":"200 ng/mL","range":[50,800],"unit":"ng/mL","positiveThreshold":200}
   ],
