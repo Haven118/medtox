@@ -102,18 +102,79 @@ app.get('/api/tox/search', (req, res) => {
 const panels = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/panels.json'), 'utf8'));
 const panelKeywords = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/panel_keywords.json'), 'utf8'));
 
+const randomInRange = (min, max, decimals = 0) => {
+  const val = Math.random() * (max - min) + min;
+  return parseFloat(val.toFixed(decimals));
+};
+
+// Trace substances that can randomly appear as incidental findings
+const TRACE_ANALYTES = [
+  { analyte: 'Cotinine (Nicotine metabolite)', cutoff: '200 ng/mL', range: [8, 45], unit: 'ng/mL', positiveThreshold: 200 },
+  { analyte: 'Caffeine', cutoff: '10 µg/mL', range: [0.4, 3.2], unit: 'µg/mL', positiveThreshold: 10 },
+  { analyte: 'Acetaminophen', cutoff: '10 µg/mL', range: [0.3, 2.8], unit: 'µg/mL', positiveThreshold: 10 },
+  { analyte: 'Ibuprofen', cutoff: '5 µg/mL', range: [0.2, 1.8], unit: 'µg/mL', positiveThreshold: 5 },
+  { analyte: 'Diphenhydramine', cutoff: '50 ng/mL', range: [4, 28], unit: 'ng/mL', positiveThreshold: 50 },
+  { analyte: 'Pseudoephedrine', cutoff: '500 ng/mL', range: [12, 85], unit: 'ng/mL', positiveThreshold: 500 },
+  { analyte: 'Dextromethorphan', cutoff: '100 ng/mL', range: [5, 40], unit: 'ng/mL', positiveThreshold: 100 },
+];
+
+const resolveAnalytes = (panelNames) => {
+  const seen = new Set();
+  const analytes = [];
+
+  for (let p = 0; p < panelNames.length; p++) {
+    const panel = panels[panelNames[p]] || [];
+    for (const a of panel) {
+      if (seen.has(a.analyte)) continue;
+      seen.add(a.analyte);
+      const [min, max] = a.range;
+      const decimals = max < 5 ? 2 : max < 50 ? 1 : 0;
+      // All keyword-triggered panels always positive with realistic amounts (1.2x-3x cutoff)
+      const posMin = Math.min(a.positiveThreshold * 1.2, max * 0.6);
+      const posMax = Math.min(a.positiveThreshold * 3, max);
+      const observed = randomInRange(posMin, posMax, decimals);
+      analytes.push({
+        analyte: a.analyte,
+        screening: 'POSITIVE',
+        confirmatory: 'POSITIVE',
+        cutoff: a.cutoff,
+        observed: `${observed} ${a.unit}`
+      });
+    }
+  }
+
+  // 1 in 5 chance of a random trace finding (always below cutoff — incidental)
+  if (Math.random() < 0.2) {
+    const candidates = TRACE_ANALYTES.filter(t => !seen.has(t.analyte));
+    if (candidates.length > 0) {
+      const t = candidates[Math.floor(Math.random() * candidates.length)];
+      const decimals = t.range[1] < 5 ? 2 : t.range[1] < 50 ? 1 : 0;
+      const observed = randomInRange(t.range[0], t.range[1], decimals);
+      analytes.push({
+        analyte: t.analyte,
+        screening: 'NEGATIVE',
+        confirmatory: 'N/A',
+        cutoff: t.cutoff,
+        observed: `${observed} ${t.unit} (trace)`
+      });
+    }
+  }
+
+  return analytes;
+};
+
 app.get('/api/tox/panel', (req, res) => {
   const lowerKeywords = (req.query.keywords || '').toLowerCase();
   const triggeredPanels = [];
   for (const [panelName, triggers] of Object.entries(panelKeywords)) {
     if (triggers.some(t => lowerKeywords.includes(t.toLowerCase()))) triggeredPanels.push(panelName);
   }
-  if (triggeredPanels.length === 0) triggeredPanels.push('standard_panel');
-  const primaryPanel = triggeredPanels[0];
-  console.log(`ToxPanel - keywords:"${req.query.keywords || ''}", lower:"${lowerKeywords}", triggered:[${triggeredPanels.join(', ')}], primary:"${primaryPanel}"`);
+  if (triggeredPanels.length === 0) triggeredPanels.push('standard_uds');
+  const uniquePanels = [...new Set(triggeredPanels)];
+  console.log(`ToxPanel - keywords:"${req.query.keywords || ''}", triggered:[${uniquePanels.join(', ')}]`);
   res.json({
-    panels: [...new Set(triggeredPanels)].map(p => p.replace(/_panel$/, '')),
-    analytes: panels[primaryPanel] || panels.standard_panel || [],
-    summary: `Auto-selected ${primaryPanel.replace(/_panel$/, '')} (${triggeredPanels.length} panels).`
+    panels: uniquePanels.map(p => p.replace(/_panel$/, '').replace(/_/g, ' ')),
+    analytes: resolveAnalytes(uniquePanels),
+    summary: `Auto-selected ${uniquePanels.length} panel(s): ${uniquePanels.join(', ')}.`
   });
 });
