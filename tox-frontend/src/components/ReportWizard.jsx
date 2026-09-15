@@ -51,7 +51,7 @@ const generateNarrative = (form, analytes) => {
 
 const ReportWizard = () => {
   const [formData, setFormData] = useState({
-    keywords: '',
+    selectedPanels: [],
     pdName: '',
     pdCaseNumber: '',
     subjectName: '',
@@ -72,7 +72,7 @@ const ReportWizard = () => {
     if (!formData.keywords) return;
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/tox/panel?keywords=${encodeURIComponent(formData.keywords)}`);
+      const res = await fetch(`${API_URL}/api/tox/panel?panels=${encodeURIComponent(formData.selectedPanels.join(','))}&specimen=${encodeURIComponent(formData.specimenType)}`);
       if (res.ok) {
         const data = await res.json();
         setResults(data);
@@ -97,6 +97,7 @@ const ReportWizard = () => {
       analytes,
       narrative,
       ...formData,
+      keywords: formData.selectedPanels.join(', '),
     };
     fetch(`${API_URL}/api/reports`, {
       method: 'POST',
@@ -127,16 +128,47 @@ const ReportWizard = () => {
       <h2 style={{ color: 'var(--accent-cyan)', marginBottom: '0.5rem', textAlign: 'center' }}>🔬 Rage EMS Forensic Toxicology</h2>
       <p style={{ color: 'var(--text-dim)', textAlign: 'center', marginBottom: '2rem', fontSize: '0.9rem' }}>Complete all sections — the system will generate a full professional forensic report</p>
 
-      {/* SECTION 1: Substance Keywords */}
+      {/* SECTION 1: Panel Selection */}
       <div style={S.section}>
-        <div style={S.sectionTitle}>1. Substance / Panel Detection</div>
-        <div>
-          <label style={S.label}>Keywords</label>
-          <input name="keywords" value={formData.keywords} onChange={handleInput}
-            placeholder="e.g. fentanyl overdose, cocaine dui, xanax chronic, meth..."
-            style={S.input} />
-          <small style={{ color: 'var(--text-dim)', marginTop: '0.4rem', display: 'block' }}>Auto-detects toxicology panels and analytes</small>
+        <div style={S.sectionTitle}>1. Substance / Panel Selection</div>
+        <label style={S.label}>Select all substances detected</label>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.5rem', marginTop: '0.5rem' }}>
+          {[
+            { label: '🧪 Fentanyl / Xylazine', value: 'fentanyl_panel' },
+            { label: '💊 Opioids (Heroin / Oxy)', value: 'opioid_panel' },
+            { label: '⚡ Stimulants (Cocaine / Meth)', value: 'stimulant_panel' },
+            { label: '🌿 Cannabis / THC', value: 'cannabinoid_panel' },
+            { label: '😴 Sedatives / Benzos', value: 'sedative_panel' },
+            { label: '🍺 Alcohol / Ethanol', value: 'alcohol_panel' },
+            { label: '🍄 Hallucinogens / PCP', value: 'hallucinogen_panel' },
+            { label: '☠️ Poison / Overdose', value: 'poison_panel' },
+            { label: '🚗 DUI Panel', value: 'dui_panel' },
+            { label: '🦷 Heavy Metals', value: 'heavy_metals_panel' },
+            { label: '💀 Post-Mortem', value: 'postmortem_panel' },
+            { label: '📋 Prescription Abuse', value: 'prescription_panel' },
+            { label: '🔬 Expanded Opioid Panel', value: 'expanded_panel' },
+          ].map(({ label, value }) => {
+            const selected = formData.selectedPanels.includes(value);
+            return (
+              <button key={value} type="button" onClick={() => setFormData(f => ({
+                ...f,
+                selectedPanels: selected ? f.selectedPanels.filter(p => p !== value) : [...f.selectedPanels, value]
+              }))} style={{
+                padding: '0.6rem 0.9rem', borderRadius: '10px', border: `1px solid ${selected ? 'var(--accent-cyan)' : 'rgba(255,255,255,0.1)'}`,
+                background: selected ? 'rgba(0,242,255,0.15)' : 'rgba(255,255,255,0.04)',
+                color: selected ? 'var(--accent-cyan)' : 'var(--text-dim)', cursor: 'pointer',
+                fontSize: '0.85rem', fontWeight: selected ? '700' : '400', textAlign: 'left', transition: 'all 0.15s'
+              }}>
+                {label}
+              </button>
+            );
+          })}
         </div>
+        {formData.selectedPanels.length > 0 && (
+          <div style={{ marginTop: '0.75rem', fontSize: '0.8rem', color: 'var(--accent-cyan)' }}>
+            ✓ {formData.selectedPanels.length} panel{formData.selectedPanels.length > 1 ? 's' : ''} selected
+          </div>
+        )}
       </div>
 
       {/* SECTION 2: Case Identifiers */}
@@ -208,7 +240,7 @@ const ReportWizard = () => {
       </div>
 
       {/* ANALYZE BUTTON */}
-      <button onClick={analyze} disabled={loading || !formData.keywords.trim()} style={{
+      <button onClick={analyze} disabled={loading || formData.selectedPanels.length === 0} style={{
         padding: '1.25rem 3rem', background: 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))',
         border: 'none', borderRadius: '16px', color: 'black', fontWeight: 'bold', fontSize: '1.05rem',
         cursor: 'pointer', display: 'flex', gap: '0.75rem', alignItems: 'center', justifyContent: 'center',
@@ -405,9 +437,7 @@ const ReportWizard = () => {
         </div>
       )}
 
-      <div style={{ opacity: 0.4, fontSize: '0.85rem', marginTop: '2rem', textAlign: 'center', padding: '1rem', background: 'rgba(255,255,255,0.02)', borderRadius: '12px' }}>
-        <strong>💡 Examples:</strong> "fentanyl overdose xylazine" · "cocaine dui meth" · "weed chronic THC" · "xanax overdose benzos" · "alcohol ethanol postmortem"
-      </div>
+
     </div>
   );
 };

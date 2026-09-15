@@ -164,11 +164,21 @@ const resolveAnalytes = (panelNames) => {
 };
 
 app.get('/api/tox/panel', (req, res) => {
-  const lowerKeywords = (req.query.keywords || '').toLowerCase();
+  const specimenType = (req.query.specimen || '').toLowerCase();
   const triggeredPanels = [];
-  for (const [panelName, triggers] of Object.entries(panelKeywords)) {
-    if (triggers.some(t => lowerKeywords.includes(t.toLowerCase()))) triggeredPanels.push(panelName);
+
+  // Add base panel from specimen type
+  if (specimenType.includes('urine')) triggeredPanels.push('urine_panel');
+  else if (specimenType.includes('blood')) triggeredPanels.push('blood_panel');
+  else if (specimenType.includes('hair')) triggeredPanels.push('hair_panel');
+
+  // Add directly selected panels from frontend
+  const selectedPanels = (req.query.panels || '').split(',').map(p => p.trim()).filter(Boolean);
+  for (const p of selectedPanels) {
+    if (!triggeredPanels.includes(p)) triggeredPanels.push(p);
   }
+
+  // Fallback
   if (triggeredPanels.length === 0) triggeredPanels.push('standard_uds');
   const uniquePanels = [...new Set(triggeredPanels)];
   console.log(`ToxPanel - keywords:"${req.query.keywords || ''}", triggered:[${uniquePanels.join(', ')}]`);
