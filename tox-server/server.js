@@ -107,17 +107,39 @@ const randomInRange = (min, max, decimals = 0) => {
   return parseFloat(val.toFixed(decimals));
 };
 
+// Trace substances that can randomly appear as incidental findings
+const TRACE_ANALYTES = [
+  { analyte: 'Cotinine (Nicotine metabolite)', cutoff: '200 ng/mL', range: [8, 45], unit: 'ng/mL', positiveThreshold: 200 },
+  { analyte: 'Caffeine', cutoff: '10 µg/mL', range: [0.4, 3.2], unit: 'µg/mL', positiveThreshold: 10 },
+  { analyte: 'Acetaminophen', cutoff: '10 µg/mL', range: [0.3, 2.8], unit: 'µg/mL', positiveThreshold: 10 },
+  { analyte: 'Ibuprofen', cutoff: '5 µg/mL', range: [0.2, 1.8], unit: 'µg/mL', positiveThreshold: 5 },
+  { analyte: 'Diphenhydramine', cutoff: '50 ng/mL', range: [4, 28], unit: 'ng/mL', positiveThreshold: 50 },
+  { analyte: 'Pseudoephedrine', cutoff: '500 ng/mL', range: [12, 85], unit: 'ng/mL', positiveThreshold: 500 },
+  { analyte: 'Dextromethorphan', cutoff: '100 ng/mL', range: [5, 40], unit: 'ng/mL', positiveThreshold: 100 },
+];
+
 const resolveAnalytes = (panelNames) => {
   const seen = new Set();
   const analytes = [];
-  for (const name of panelNames) {
-    const panel = panels[name] || [];
+
+  for (let p = 0; p < panelNames.length; p++) {
+    const panel = panels[panelNames[p]] || [];
+    const isPrimary = p === 0;
     for (const a of panel) {
       if (seen.has(a.analyte)) continue;
       seen.add(a.analyte);
       const [min, max] = a.range;
       const decimals = max < 5 ? 2 : max < 50 ? 1 : 0;
-      const observed = randomInRange(min, max, decimals);
+      let observed;
+      if (isPrimary) {
+        // Primary panel: realistic positive — between 1.2x and 3x the cutoff, capped at max
+        const posMin = Math.min(a.positiveThreshold * 1.2, max * 0.6);
+        const posMax = Math.min(a.positiveThreshold * 3, max);
+        observed = randomInRange(posMin, posMax, decimals);
+      } else {
+        // Secondary panels: random across full realistic range
+        observed = randomInRange(min, max, decimals);
+      }
       const isPositive = observed >= a.positiveThreshold;
       analytes.push({
         analyte: a.analyte,
@@ -128,6 +150,24 @@ const resolveAnalytes = (panelNames) => {
       });
     }
   }
+
+  // 1 in 5 chance of a random trace finding (always below cutoff — incidental)
+  if (Math.random() < 0.2) {
+    const candidates = TRACE_ANALYTES.filter(t => !seen.has(t.analyte));
+    if (candidates.length > 0) {
+      const t = candidates[Math.floor(Math.random() * candidates.length)];
+      const decimals = t.range[1] < 5 ? 2 : t.range[1] < 50 ? 1 : 0;
+      const observed = randomInRange(t.range[0], t.range[1], decimals);
+      analytes.push({
+        analyte: t.analyte,
+        screening: 'NEGATIVE',
+        confirmatory: 'N/A',
+        cutoff: t.cutoff,
+        observed: `${observed} ${t.unit} (trace)`
+      });
+    }
+  }
+
   return analytes;
 };
 
