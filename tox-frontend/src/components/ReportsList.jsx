@@ -105,7 +105,7 @@ export const ReportTemplate = ({ report, reportRef }) => {
       <div style={{ borderBottom: '4px solid #1e3a8a', paddingBottom: '1rem', marginBottom: '1rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
-            <div style={{ fontSize: '7pt', color: '#64748b', fontWeight: '700', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '4px' }}>Trifinity Emergency Medical Services</div>
+            <div style={{ fontSize: '7pt', color: '#64748b', fontWeight: '700', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '4px' }}>Rage Emergency Medical Services</div>
             <h1 style={{ fontSize: '18pt', color: '#1e3a8a', margin: '0 0 2px 0', fontWeight: '900', lineHeight: 1.1 }}>FORENSIC TOXICOLOGY REPORT</h1>
             <div style={{ fontSize: '11pt', color: '#1e40af', fontWeight: '600' }}>CASE #{report.pdCaseNumber || 'PENDING'}</div>
           </div>
@@ -203,7 +203,7 @@ export const ReportTemplate = ({ report, reportRef }) => {
         <div style={{ textAlign: 'center', width: '45%' }}>
           <div style={{ borderBottom: '1px solid #334155', marginBottom: '4px', height: '28px' }}></div>
           <div style={{ fontSize: '8pt', color: '#475569', fontWeight: '600' }}>Lead Forensic Toxicologist</div>
-          <div style={{ fontSize: '8pt', color: '#475569' }}>Trifinity EMS Forensic Laboratory</div>
+          <div style={{ fontSize: '8pt', color: '#475569' }}>Rage EMS Forensic Laboratory</div>
         </div>
         <div style={{ textAlign: 'center', width: '45%' }}>
           <div style={{ borderBottom: '1px solid #334155', marginBottom: '4px', height: '28px' }}></div>
@@ -213,7 +213,7 @@ export const ReportTemplate = ({ report, reportRef }) => {
       </div>
       <div style={{ textAlign: 'center', marginTop: '10px', padding: '6px', background: '#f0fdf4', border: '1px solid #86efac', fontSize: '8pt' }}>
         <strong style={{ color: '#15803d' }}>✓ CHAIN OF CUSTODY VERIFIED — DIGITAL CERTIFICATE &amp; AUDIT TRAIL COMPLETE</strong>
-        <div style={{ color: '#475569', marginTop: '2px' }}>Report ID: {report.emsCaseNumber} | Generated: {report.date} | Trifinity EMS Forensic Lab</div>
+        <div style={{ color: '#475569', marginTop: '2px' }}>Report ID: {report.emsCaseNumber} | Generated: {report.date} | Rage EMS Forensic Lab</div>
       </div>
     </div>
   );

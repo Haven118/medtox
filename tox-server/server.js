@@ -102,18 +102,47 @@ app.get('/api/tox/search', (req, res) => {
 const panels = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/panels.json'), 'utf8'));
 const panelKeywords = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/panel_keywords.json'), 'utf8'));
 
+const randomInRange = (min, max, decimals = 0) => {
+  const val = Math.random() * (max - min) + min;
+  return parseFloat(val.toFixed(decimals));
+};
+
+const resolveAnalytes = (panelNames) => {
+  const seen = new Set();
+  const analytes = [];
+  for (const name of panelNames) {
+    const panel = panels[name] || [];
+    for (const a of panel) {
+      if (seen.has(a.analyte)) continue;
+      seen.add(a.analyte);
+      const [min, max] = a.range;
+      const decimals = max < 5 ? 2 : max < 50 ? 1 : 0;
+      const observed = randomInRange(min, max, decimals);
+      const isPositive = observed >= a.positiveThreshold;
+      analytes.push({
+        analyte: a.analyte,
+        screening: isPositive ? 'POSITIVE' : 'NEGATIVE',
+        confirmatory: isPositive ? 'POSITIVE' : 'N/A',
+        cutoff: a.cutoff,
+        observed: `${observed} ${a.unit}`
+      });
+    }
+  }
+  return analytes;
+};
+
 app.get('/api/tox/panel', (req, res) => {
   const lowerKeywords = (req.query.keywords || '').toLowerCase();
   const triggeredPanels = [];
   for (const [panelName, triggers] of Object.entries(panelKeywords)) {
     if (triggers.some(t => lowerKeywords.includes(t.toLowerCase()))) triggeredPanels.push(panelName);
   }
-  if (triggeredPanels.length === 0) triggeredPanels.push('standard_panel');
-  const primaryPanel = triggeredPanels[0];
-  console.log(`ToxPanel - keywords:"${req.query.keywords || ''}", lower:"${lowerKeywords}", triggered:[${triggeredPanels.join(', ')}], primary:"${primaryPanel}"`);
+  if (triggeredPanels.length === 0) triggeredPanels.push('standard_uds');
+  const uniquePanels = [...new Set(triggeredPanels)];
+  console.log(`ToxPanel - keywords:"${req.query.keywords || ''}", triggered:[${uniquePanels.join(', ')}]`);
   res.json({
-    panels: [...new Set(triggeredPanels)].map(p => p.replace(/_panel$/, '')),
-    analytes: panels[primaryPanel] || panels.standard_panel || [],
-    summary: `Auto-selected ${primaryPanel.replace(/_panel$/, '')} (${triggeredPanels.length} panels).`
+    panels: uniquePanels.map(p => p.replace(/_panel$/, '').replace(/_/g, ' ')),
+    analytes: resolveAnalytes(uniquePanels),
+    summary: `Auto-selected ${uniquePanels.length} panel(s): ${uniquePanels.join(', ')}.`
   });
 });

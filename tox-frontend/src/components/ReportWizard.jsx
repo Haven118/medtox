@@ -22,7 +22,7 @@ const generateNarrative = (form, analytes) => {
 
   const specimenLabel = specimenType || 'biological specimen';
 
-  let intro = `On ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}, ${pdName} submitted a ${objectDesc} to the Trifinity EMS Forensic Laboratory ${sceneText} and requested a comprehensive toxicological analysis. The officer indicated that the item ${usageDesc}.`;
+  let intro = `On ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}, ${pdName} submitted a ${objectDesc} to the Rage EMS Forensic Laboratory ${sceneText} and requested a comprehensive toxicological analysis. The officer indicated that the item ${usageDesc}.`;
 
   let subjectLine = subjectName ? ` The specimen was collected from subject: ${subjectName}.` : '';
 
@@ -124,7 +124,7 @@ const ReportWizard = () => {
 
   return (
     <div className="glass-panel" style={{ padding: '2.5rem', maxWidth: '1000px', margin: '2rem auto' }}>
-      <h2 style={{ color: 'var(--accent-cyan)', marginBottom: '0.5rem', textAlign: 'center' }}>🔬 Trifinity EMS Forensic Toxicology</h2>
+      <h2 style={{ color: 'var(--accent-cyan)', marginBottom: '0.5rem', textAlign: 'center' }}>🔬 Rage EMS Forensic Toxicology</h2>
       <p style={{ color: 'var(--text-dim)', textAlign: 'center', marginBottom: '2rem', fontSize: '0.9rem' }}>Complete all sections — the system will generate a full professional forensic report</p>
 
       {/* SECTION 1: Substance Keywords */}
@@ -258,7 +258,7 @@ const ReportWizard = () => {
             <div style={{ borderBottom: '4px solid #1e3a8a', paddingBottom: '1rem', marginBottom: '1rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
-                  <div style={{ fontSize: '7pt', color: '#64748b', fontWeight: '700', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '4px' }}>Trifinity Emergency Medical Services</div>
+                  <div style={{ fontSize: '7pt', color: '#64748b', fontWeight: '700', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '4px' }}>Rage Emergency Medical Services</div>
                   <h1 style={{ fontSize: '18pt', color: '#1e3a8a', margin: '0 0 2px 0', fontWeight: '900', lineHeight: 1.1 }}>FORENSIC TOXICOLOGY REPORT</h1>
                   <div style={{ fontSize: '11pt', color: '#1e40af', fontWeight: '600' }}>CASE #{formData.pdCaseNumber || 'PENDING'}</div>
                 </div>
@@ -377,7 +377,7 @@ const ReportWizard = () => {
                 <div style={{ textAlign: 'center', width: '45%' }}>
                   <div style={{ borderBottom: '1px solid #334155', marginBottom: '4px', height: '28px' }}></div>
                   <div style={{ fontSize: '8pt', color: '#475569', fontWeight: '600' }}>Lead Forensic Toxicologist</div>
-                  <div style={{ fontSize: '8pt', color: '#475569' }}>Trifinity EMS Forensic Laboratory</div>
+                  <div style={{ fontSize: '8pt', color: '#475569' }}>Rage EMS Forensic Laboratory</div>
                 </div>
                 <div style={{ textAlign: 'center', width: '45%' }}>
                   <div style={{ borderBottom: '1px solid #334155', marginBottom: '4px', height: '28px' }}></div>
@@ -388,7 +388,7 @@ const ReportWizard = () => {
 
               <div style={{ textAlign: 'center', marginTop: '10px', padding: '6px', background: '#f0fdf4', border: '1px solid #86efac', fontSize: '8pt' }}>
                 <strong style={{ color: '#15803d' }}>✓ CHAIN OF CUSTODY VERIFIED — DIGITAL CERTIFICATE &amp; AUDIT TRAIL COMPLETE</strong>
-                <div style={{ color: '#475569', marginTop: '2px' }}>Report ID: {emsCaseNumber} | Generated: {new Date().toLocaleString()} | Trifinity EMS Forensic Lab</div>
+                <div style={{ color: '#475569', marginTop: '2px' }}>Report ID: {emsCaseNumber} | Generated: {new Date().toLocaleString()} | Rage EMS Forensic Lab</div>
               </div>
             </div>
           </div>

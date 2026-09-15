@@ -1,120 +1,138 @@
 {
   "standard_panel": [
-    {"analyte":"Morphine","screening":"Negative","confirmatory":"N/A","cutoff":"300 ng/mL","observed":"<20 ng/mL"},
-    {"analyte":"Codeine","screening":"Negative","confirmatory":"N/A","cutoff":"300 ng/mL","observed":"<20 ng/mL"},
-    {"analyte":"Hydrocodone","screening":"Negative","confirmatory":"N/A","cutoff":"100 ng/mL","observed":"<10 ng/mL"},
-    {"analyte":"Oxycodone","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"100 ng/mL","observed":"450 ng/mL"},
-    {"analyte":"Butalbital","screening":"Negative","confirmatory":"N/A","cutoff":"200 ng/mL","observed":"<50 ng/mL"},
-    {"analyte":"Phenobarbital","screening":"Negative","confirmatory":"N/A","cutoff":"200 ng/mL","observed":"<50 ng/mL"},
-    {"analyte":"Diazepam","screening":"Negative","confirmatory":"N/A","cutoff":"200 ng/mL","observed":"<50 ng/mL"},
-    {"analyte":"Alprazolam","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"200 ng/mL","observed":"250 ng/mL"},
-    {"analyte":"Cocaine","screening":"Negative","confirmatory":"N/A","cutoff":"150 ng/mL","observed":"<50 ng/mL"},
-    {"analyte":"Benzoylecgonine","screening":"Negative","confirmatory":"N/A","cutoff":"300 ng/mL","observed":"<100 ng/mL"},
-    {"analyte":"THC-COOH","screening":"Negative","confirmatory":"N/A","cutoff":"50 ng/mL","observed":"<15 ng/mL"},
-    {"analyte":"PCP","screening":"Negative","confirmatory":"N/A","cutoff":"25 ng/mL","observed":"<5 ng/mL"}
+    {"analyte":"Morphine","cutoff":"300 ng/mL","range":[20,800],"unit":"ng/mL","positiveThreshold":300},
+    {"analyte":"Codeine","cutoff":"300 ng/mL","range":[20,600],"unit":"ng/mL","positiveThreshold":300},
+    {"analyte":"Hydrocodone","cutoff":"100 ng/mL","range":[10,500],"unit":"ng/mL","positiveThreshold":100},
+    {"analyte":"Oxycodone","cutoff":"100 ng/mL","range":[10,600],"unit":"ng/mL","positiveThreshold":100},
+    {"analyte":"Alprazolam","cutoff":"200 ng/mL","range":[50,800],"unit":"ng/mL","positiveThreshold":200},
+    {"analyte":"Diazepam","cutoff":"200 ng/mL","range":[50,700],"unit":"ng/mL","positiveThreshold":200},
+    {"analyte":"Cocaine","cutoff":"150 ng/mL","range":[50,1200],"unit":"ng/mL","positiveThreshold":150},
+    {"analyte":"Benzoylecgonine","cutoff":"300 ng/mL","range":[100,2000],"unit":"ng/mL","positiveThreshold":300},
+    {"analyte":"THC-COOH","cutoff":"50 ng/mL","range":[15,300],"unit":"ng/mL","positiveThreshold":50},
+    {"analyte":"PCP","cutoff":"25 ng/mL","range":[5,100],"unit":"ng/mL","positiveThreshold":25}
   ],
   "fentanyl_panel": [
-    {"analyte":"Fentanyl","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"2 ng/mL","observed":"12 ng/mL"},
-    {"analyte":"Norfentanyl","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"1 ng/mL","observed":"8 ng/mL"},
-    {"analyte":"Carfentanil","screening":"Negative","confirmatory":"N/A","cutoff":"0.1 ng/mL","observed":"<0.05 ng/mL"},
-    {"analyte":"Sufentanil","screening":"Negative","confirmatory":"N/A","cutoff":"0.1 ng/mL","observed":"<0.05 ng/mL"}
+    {"analyte":"Fentanyl","cutoff":"2 ng/mL","range":[0.5,35],"unit":"ng/mL","positiveThreshold":2},
+    {"analyte":"Norfentanyl","cutoff":"1 ng/mL","range":[0.5,20],"unit":"ng/mL","positiveThreshold":1},
+    {"analyte":"Carfentanil","cutoff":"0.1 ng/mL","range":[0.02,0.5],"unit":"ng/mL","positiveThreshold":0.1},
+    {"analyte":"Acetylfentanyl","cutoff":"1 ng/mL","range":[0.2,8],"unit":"ng/mL","positiveThreshold":1},
+    {"analyte":"Xylazine","cutoff":"10 ng/mL","range":[2,80],"unit":"ng/mL","positiveThreshold":10}
   ],
   "urine_panel": [
-    {"analyte":"Marijuana (THC)","screening":"Negative","confirmatory":"N/A","cutoff":"50 ng/mL","observed":"<15 ng/mL"},
-    {"analyte":"Cocaine","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"150 ng/mL","observed":"800 ng/mL"},
-    {"analyte":"Amphetamines","screening":"Negative","confirmatory":"N/A","cutoff":"500 ng/mL","observed":"<50 ng/mL"},
-    {"analyte":"Opiates","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"300 ng/mL","observed":"450 ng/mL"},
-    {"analyte":"PCP","screening":"Negative","confirmatory":"N/A","cutoff":"25 ng/mL","observed":"<5 ng/mL"}
+    {"analyte":"Marijuana (THC)","cutoff":"50 ng/mL","range":[15,400],"unit":"ng/mL","positiveThreshold":50},
+    {"analyte":"Cocaine","cutoff":"150 ng/mL","range":[50,1500],"unit":"ng/mL","positiveThreshold":150},
+    {"analyte":"Amphetamines","cutoff":"500 ng/mL","range":[50,3000],"unit":"ng/mL","positiveThreshold":500},
+    {"analyte":"Opiates","cutoff":"300 ng/mL","range":[20,1200],"unit":"ng/mL","positiveThreshold":300},
+    {"analyte":"Benzodiazepines","cutoff":"200 ng/mL","range":[50,800],"unit":"ng/mL","positiveThreshold":200},
+    {"analyte":"PCP","cutoff":"25 ng/mL","range":[5,100],"unit":"ng/mL","positiveThreshold":25}
   ],
   "blood_panel": [
-    {"analyte":"Ethanol","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"0.08%","observed":"0.12%"},
-    {"analyte":"Fentanyl","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"2 ng/mL","observed":"15 ng/mL"},
-    {"analyte":"Benzodiazepines","screening":"Negative","confirmatory":"N/A","cutoff":"50 ng/mL","observed":"<10 ng/mL"}
+    {"analyte":"Ethanol","cutoff":"0.08%","range":[0.02,0.35],"unit":"%","positiveThreshold":0.08},
+    {"analyte":"Fentanyl","cutoff":"2 ng/mL","range":[0.5,30],"unit":"ng/mL","positiveThreshold":2},
+    {"analyte":"Benzodiazepines","cutoff":"50 ng/mL","range":[10,400],"unit":"ng/mL","positiveThreshold":50},
+    {"analyte":"Cocaine","cutoff":"150 ng/mL","range":[50,900],"unit":"ng/mL","positiveThreshold":150},
+    {"analyte":"Methamphetamine","cutoff":"500 ng/mL","range":[50,2500],"unit":"ng/mL","positiveThreshold":500}
   ],
   "hair_panel": [
-    {"analyte":"Morphine","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"0.2 pg/mg","observed":"1.5 pg/mg"},
-    {"analyte":"Cocaine","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"0.5 pg/mg","observed":"2.8 pg/mg"},
-    {"analyte":"THC-COOH","screening":"Negative","confirmatory":"N/A","cutoff":"0.2 pg/mg","observed":"<0.1 pg/mg"}
+    {"analyte":"Morphine","cutoff":"0.2 pg/mg","range":[0.05,4],"unit":"pg/mg","positiveThreshold":0.2},
+    {"analyte":"Cocaine","cutoff":"0.5 pg/mg","range":[0.1,6],"unit":"pg/mg","positiveThreshold":0.5},
+    {"analyte":"Methamphetamine","cutoff":"0.5 pg/mg","range":[0.1,5],"unit":"pg/mg","positiveThreshold":0.5},
+    {"analyte":"THC-COOH","cutoff":"0.2 pg/mg","range":[0.05,2],"unit":"pg/mg","positiveThreshold":0.2},
+    {"analyte":"Fentanyl","cutoff":"0.1 pg/mg","range":[0.02,1],"unit":"pg/mg","positiveThreshold":0.1}
   ],
   "postmortem_panel": [
-    {"analyte":"Fentanyl","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"5 ng/mL","observed":"28 ng/mL"},
-    {"analyte":"Ethanol","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"0.08%","observed":"0.25%"},
-    {"analyte":"Morphine","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"100 ng/mL","observed":"350 ng/mL"},
-    {"analyte":"Carbon Monoxide","screening":"Negative","confirmatory":"N/A","cutoff":"10%","observed":"5%"},
-    {"analyte":"Lead","screening":"Negative","confirmatory":"N/A","cutoff":"10 µg/dL","observed":"<5 µg/dL"}
+    {"analyte":"Fentanyl","cutoff":"5 ng/mL","range":[1,80],"unit":"ng/mL","positiveThreshold":5},
+    {"analyte":"Ethanol","cutoff":"0.08%","range":[0.05,0.45],"unit":"%","positiveThreshold":0.08},
+    {"analyte":"Morphine","cutoff":"100 ng/mL","range":[20,800],"unit":"ng/mL","positiveThreshold":100},
+    {"analyte":"Norfentanyl","cutoff":"2 ng/mL","range":[0.5,40],"unit":"ng/mL","positiveThreshold":2},
+    {"analyte":"Xylazine","cutoff":"10 ng/mL","range":[2,120],"unit":"ng/mL","positiveThreshold":10},
+    {"analyte":"Carbon Monoxide","cutoff":"10%","range":[2,35],"unit":"%","positiveThreshold":10}
   ],
   "cannabinoid_panel": [
-    {"analyte":"THC-COOH","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"50 ng/mL","observed":"85 ng/mL"},
-    {"analyte":"11-OH-THC","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"15 ng/mL","observed":"32 ng/mL"},
-    {"analyte":"JWH-018","screening":"Negative","confirmatory":"N/A","cutoff":"5 ng/mL","observed":"<2 ng/mL"},
-    {"analyte":"Delta-8 THC","screening":"Negative","confirmatory":"N/A","cutoff":"20 ng/mL","observed":"<5 ng/mL"}
-  ],
-  "generic_panel": [
-    {"analyte":"Oxycodone","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"100 ng/mL","observed":"450 ng/mL"},
-    {"analyte":"Oxymorphone","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"50 ng/mL","observed":"120 ng/mL"},
-    {"analyte":"Hydrocodone","screening":"Negative","confirmatory":"N/A","cutoff":"100 ng/mL","observed":"<10 ng/mL"},
-    {"analyte":"Morphine","screening":"Negative","confirmatory":"N/A","cutoff":"300 ng/mL","observed":"<20 ng/mL"}
-  ],
-  "poison_panel": [
-    {"analyte":"Paracetamol (Acetaminophen)","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"10 µg/mL","observed":"145 µg/mL"},
-    {"analyte":"Salicylate (Aspirin)","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"20 mg/dL","observed":"85 mg/dL"},
-    {"analyte":"Carbon Monoxide","screening":"Negative","confirmatory":"N/A","cutoff":"10%","observed":"3%"},
-    {"analyte":"Cyanide","screening":"Negative","confirmatory":"N/A","cutoff":"0.5 µg/mL","observed":"<0.2 µg/mL"},
-    {"analyte":"Ethylene Glycol","screening":"Negative","confirmatory":"N/A","cutoff":"5 mg/dL","observed":"<1 mg/dL"}
-  ],
-  "alcohol_panel": [
-    {"analyte":"Ethanol","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"0.08%","observed":"0.18%"},
-    {"analyte":"Acetaldehyde","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"0.1 mg/L","observed":"0.45 mg/L"},
-    {"analyte":"Methanol","screening":"Negative","confirmatory":"N/A","cutoff":"10 mg/dL","observed":"<2 mg/dL"}
+    {"analyte":"THC-COOH","cutoff":"50 ng/mL","range":[15,500],"unit":"ng/mL","positiveThreshold":50},
+    {"analyte":"11-OH-THC","cutoff":"15 ng/mL","range":[5,120],"unit":"ng/mL","positiveThreshold":15},
+    {"analyte":"Delta-9 THC","cutoff":"10 ng/mL","range":[2,80],"unit":"ng/mL","positiveThreshold":10},
+    {"analyte":"Delta-8 THC","cutoff":"20 ng/mL","range":[5,100],"unit":"ng/mL","positiveThreshold":20},
+    {"analyte":"CBD","cutoff":"50 ng/mL","range":[10,200],"unit":"ng/mL","positiveThreshold":50}
   ],
   "stimulant_panel": [
-    {"analyte":"Amphetamine","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"500 ng/mL","observed":"2500 ng/mL"},
-    {"analyte":"Methamphetamine","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"500 ng/mL","observed":"1800 ng/mL"},
-    {"analyte":"Cocaine","screening":"Negative","confirmatory":"N/A","cutoff":"150 ng/mL","observed":"<50 ng/mL"},
-    {"analyte":"MDA","screening":"Negative","confirmatory":"N/A","cutoff":"500 ng/mL","observed":"<100 ng/mL"}
+    {"analyte":"Amphetamine","cutoff":"500 ng/mL","range":[50,4000],"unit":"ng/mL","positiveThreshold":500},
+    {"analyte":"Methamphetamine","cutoff":"500 ng/mL","range":[50,5000],"unit":"ng/mL","positiveThreshold":500},
+    {"analyte":"MDMA","cutoff":"500 ng/mL","range":[50,3000],"unit":"ng/mL","positiveThreshold":500},
+    {"analyte":"Cocaine","cutoff":"150 ng/mL","range":[50,1200],"unit":"ng/mL","positiveThreshold":150},
+    {"analyte":"MDA","cutoff":"500 ng/mL","range":[100,2000],"unit":"ng/mL","positiveThreshold":500}
   ],
   "sedative_panel": [
-    {"analyte":"Diazepam","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"200 ng/mL","observed":"650 ng/mL"},
-    {"analyte":"Nordiazepam","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"100 ng/mL","observed":"320 ng/mL"},
-    {"analyte":"Temazepam","screening":"Negative","confirmatory":"N/A","cutoff":"200 ng/mL","observed":"<50 ng/mL"},
-    {"analyte":"Oxazepam","screening":"Negative","confirmatory":"N/A","cutoff":"200 ng/mL","observed":"<50 ng/mL"}
+    {"analyte":"Diazepam","cutoff":"200 ng/mL","range":[50,1200],"unit":"ng/mL","positiveThreshold":200},
+    {"analyte":"Nordiazepam","cutoff":"100 ng/mL","range":[30,800],"unit":"ng/mL","positiveThreshold":100},
+    {"analyte":"Alprazolam","cutoff":"200 ng/mL","range":[50,900],"unit":"ng/mL","positiveThreshold":200},
+    {"analyte":"Clonazepam","cutoff":"200 ng/mL","range":[50,700],"unit":"ng/mL","positiveThreshold":200},
+    {"analyte":"Lorazepam","cutoff":"200 ng/mL","range":[50,600],"unit":"ng/mL","positiveThreshold":200},
+    {"analyte":"Zolpidem","cutoff":"50 ng/mL","range":[10,300],"unit":"ng/mL","positiveThreshold":50}
   ],
-  "prescription_panel": [
-    {"analyte":"Oxycodone","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"100 ng/mL","observed":"280 ng/mL"},
-    {"analyte":"Hydrocodone","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"100 ng/mL","observed":"420 ng/mL"},
-    {"analyte":"Tramadol","screening":"Negative","confirmatory":"N/A","cutoff":"200 ng/mL","observed":"<50 ng/mL"},
-    {"analyte":"Tapentadol","screening":"Negative","confirmatory":"N/A","cutoff":"100 ng/mL","observed":"<20 ng/mL"}
+  "alcohol_panel": [
+    {"analyte":"Ethanol","cutoff":"0.08%","range":[0.02,0.40],"unit":"%","positiveThreshold":0.08},
+    {"analyte":"Acetaldehyde","cutoff":"0.1 mg/L","range":[0.05,1.2],"unit":"mg/L","positiveThreshold":0.1},
+    {"analyte":"Methanol","cutoff":"10 mg/dL","range":[1,25],"unit":"mg/dL","positiveThreshold":10}
+  ],
+  "poison_panel": [
+    {"analyte":"Paracetamol (Acetaminophen)","cutoff":"10 µg/mL","range":[2,250],"unit":"µg/mL","positiveThreshold":10},
+    {"analyte":"Salicylate (Aspirin)","cutoff":"20 mg/dL","range":[5,150],"unit":"mg/dL","positiveThreshold":20},
+    {"analyte":"Carbon Monoxide","cutoff":"10%","range":[2,40],"unit":"%","positiveThreshold":10},
+    {"analyte":"Cyanide","cutoff":"0.5 µg/mL","range":[0.1,3],"unit":"µg/mL","positiveThreshold":0.5},
+    {"analyte":"Ethylene Glycol","cutoff":"5 mg/dL","range":[1,50],"unit":"mg/dL","positiveThreshold":5}
   ],
   "dui_panel": [
-    {"analyte":"Ethanol","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"0.08%","observed":"0.11%"},
-    {"analyte":"THC-COOH","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"5 ng/mL","observed":"12 ng/mL"},
-    {"analyte":"Amphetamine","screening":"Negative","confirmatory":"N/A","cutoff":"250 ng/mL","observed":"<50 ng/mL"},
-    {"analyte":"Benzodiazepines","screening":"Negative","confirmatory":"N/A","cutoff":"50 ng/mL","observed":"<10 ng/mL"}
+    {"analyte":"Ethanol","cutoff":"0.08%","range":[0.02,0.30],"unit":"%","positiveThreshold":0.08},
+    {"analyte":"THC-COOH","cutoff":"5 ng/mL","range":[1,40],"unit":"ng/mL","positiveThreshold":5},
+    {"analyte":"Amphetamine","cutoff":"250 ng/mL","range":[50,1500],"unit":"ng/mL","positiveThreshold":250},
+    {"analyte":"Benzodiazepines","cutoff":"50 ng/mL","range":[10,300],"unit":"ng/mL","positiveThreshold":50},
+    {"analyte":"Cocaine","cutoff":"150 ng/mL","range":[50,800],"unit":"ng/mL","positiveThreshold":150}
   ],
   "heavy_metals_panel": [
-    {"analyte":"Lead","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"5 µg/dL","observed":"18 µg/dL"},
-    {"analyte":"Mercury","screening":"Negative","confirmatory":"N/A","cutoff":"10 µg/L","observed":"<2 µg/L"},
-    {"analyte":"Arsenic","screening":"Negative","confirmatory":"N/A","cutoff":"10 µg/L","observed":"<5 µg/L"},
-    {"analyte":"Cadmium","screening":"Negative","confirmatory":"N/A","cutoff":"5 µg/L","observed":"<1 µg/L"}
+    {"analyte":"Lead","cutoff":"5 µg/dL","range":[1,40],"unit":"µg/dL","positiveThreshold":5},
+    {"analyte":"Mercury","cutoff":"10 µg/L","range":[1,50],"unit":"µg/L","positiveThreshold":10},
+    {"analyte":"Arsenic","cutoff":"10 µg/L","range":[2,60],"unit":"µg/L","positiveThreshold":10},
+    {"analyte":"Cadmium","cutoff":"5 µg/L","range":[0.5,20],"unit":"µg/L","positiveThreshold":5}
   ],
   "hallucinogen_panel": [
-    {"analyte":"LSD","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"0.5 ng/mL","observed":"2.1 ng/mL"},
-    {"analyte":"Psilocybin","screening":"Negative","confirmatory":"N/A","cutoff":"10 ng/mL","observed":"<5 ng/mL"},
-    {"analyte":"Ketamine","screening":"Negative","confirmatory":"N/A","cutoff":"50 ng/mL","observed":"<10 ng/mL"},
-    {"analyte":"Mescaline","screening":"Negative","confirmatory":"N/A","cutoff":"25 ng/mL","observed":"<5 ng/mL"}
+    {"analyte":"LSD","cutoff":"0.5 ng/mL","range":[0.1,5],"unit":"ng/mL","positiveThreshold":0.5},
+    {"analyte":"Psilocybin","cutoff":"10 ng/mL","range":[2,60],"unit":"ng/mL","positiveThreshold":10},
+    {"analyte":"Ketamine","cutoff":"50 ng/mL","range":[10,400],"unit":"ng/mL","positiveThreshold":50},
+    {"analyte":"Mescaline","cutoff":"25 ng/mL","range":[5,150],"unit":"ng/mL","positiveThreshold":25},
+    {"analyte":"DMT","cutoff":"10 ng/mL","range":[2,80],"unit":"ng/mL","positiveThreshold":10}
+  ],
+  "opioid_panel": [
+    {"analyte":"Heroin (6-MAM)","cutoff":"10 ng/mL","range":[2,100],"unit":"ng/mL","positiveThreshold":10},
+    {"analyte":"Morphine","cutoff":"300 ng/mL","range":[20,1200],"unit":"ng/mL","positiveThreshold":300},
+    {"analyte":"Codeine","cutoff":"300 ng/mL","range":[20,800],"unit":"ng/mL","positiveThreshold":300},
+    {"analyte":"Hydromorphone","cutoff":"100 ng/mL","range":[10,500],"unit":"ng/mL","positiveThreshold":100},
+    {"analyte":"Oxycodone","cutoff":"100 ng/mL","range":[10,600],"unit":"ng/mL","positiveThreshold":100},
+    {"analyte":"Buprenorphine","cutoff":"5 ng/mL","range":[1,40],"unit":"ng/mL","positiveThreshold":5},
+    {"analyte":"Methadone","cutoff":"200 ng/mL","range":[50,1000],"unit":"ng/mL","positiveThreshold":200}
+  ],
+  "prescription_panel": [
+    {"analyte":"Oxycodone","cutoff":"100 ng/mL","range":[10,600],"unit":"ng/mL","positiveThreshold":100},
+    {"analyte":"Hydrocodone","cutoff":"100 ng/mL","range":[10,500],"unit":"ng/mL","positiveThreshold":100},
+    {"analyte":"Tramadol","cutoff":"200 ng/mL","range":[50,800],"unit":"ng/mL","positiveThreshold":200},
+    {"analyte":"Gabapentin","cutoff":"1000 ng/mL","range":[200,5000],"unit":"ng/mL","positiveThreshold":1000},
+    {"analyte":"Carisoprodol","cutoff":"500 ng/mL","range":[100,2000],"unit":"ng/mL","positiveThreshold":500}
   ],
   "standard_uds": [
-    {"analyte":"Amphetamines","screening":"Negative","confirmatory":"N/A","cutoff":"500 ng/mL","observed":"<50 ng/mL"},
-    {"analyte":"Cocaine","screening":"Negative","confirmatory":"N/A","cutoff":"150 ng/mL","observed":"<50 ng/mL"},
-    {"analyte":"Opiates","screening":"Negative","confirmatory":"N/A","cutoff":"300 ng/mL","observed":"<20 ng/mL"},
-    {"analyte":"Marijuana (THC)","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"50 ng/mL","observed":"120 ng/mL"},
-    {"analyte":"PCP","screening":"Negative","confirmatory":"N/A","cutoff":"25 ng/mL","observed":"<5 ng/mL"}
+    {"analyte":"Amphetamines","cutoff":"500 ng/mL","range":[50,3000],"unit":"ng/mL","positiveThreshold":500},
+    {"analyte":"Cocaine","cutoff":"150 ng/mL","range":[50,1200],"unit":"ng/mL","positiveThreshold":150},
+    {"analyte":"Opiates","cutoff":"300 ng/mL","range":[20,1000],"unit":"ng/mL","positiveThreshold":300},
+    {"analyte":"Marijuana (THC)","cutoff":"50 ng/mL","range":[15,400],"unit":"ng/mL","positiveThreshold":50},
+    {"analyte":"PCP","cutoff":"25 ng/mL","range":[5,100],"unit":"ng/mL","positiveThreshold":25},
+    {"analyte":"Benzodiazepines","cutoff":"200 ng/mL","range":[50,800],"unit":"ng/mL","positiveThreshold":200}
   ],
   "expanded_panel": [
-    {"analyte":"Oxycodone","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"100 ng/mL","observed":"350 ng/mL"},
-    {"analyte":"Oxymorphone","screening":"Negative","confirmatory":"N/A","cutoff":"50 ng/mL","observed":"<10 ng/mL"},
-    {"analyte":"Hydrocodone","screening":"POSITIVE","confirmatory":"POSITIVE","cutoff":"100 ng/mL","observed":"240 ng/mL"},
-    {"analyte":"Fentanyl","screening":"Negative","confirmatory":"N/A","cutoff":"2 ng/mL","observed":"<1 ng/mL"},
-    {"analyte":"Methadone","screening":"Negative","confirmatory":"N/A","cutoff":"200 ng/mL","observed":"<50 ng/mL"}
+    {"analyte":"Oxycodone","cutoff":"100 ng/mL","range":[10,600],"unit":"ng/mL","positiveThreshold":100},
+    {"analyte":"Oxymorphone","cutoff":"50 ng/mL","range":[10,300],"unit":"ng/mL","positiveThreshold":50},
+    {"analyte":"Hydrocodone","cutoff":"100 ng/mL","range":[10,500],"unit":"ng/mL","positiveThreshold":100},
+    {"analyte":"Fentanyl","cutoff":"2 ng/mL","range":[0.5,25],"unit":"ng/mL","positiveThreshold":2},
+    {"analyte":"Methadone","cutoff":"200 ng/mL","range":[50,1000],"unit":"ng/mL","positiveThreshold":200},
+    {"analyte":"Buprenorphine","cutoff":"5 ng/mL","range":[1,40],"unit":"ng/mL","positiveThreshold":5},
+    {"analyte":"Tramadol","cutoff":"200 ng/mL","range":[50,800],"unit":"ng/mL","positiveThreshold":200}
   ]
 }
